@@ -1,6 +1,6 @@
 <template>
   <el-container class="home">
-    <el-aside width="290px" class="session-list-container">
+    <el-aside width="290px" class="session-list-container shadow">
       <SessionList />
     </el-aside>
     <el-main class="main-container">
@@ -25,11 +25,16 @@ import SessionDetails from "@/components/SessionDetails.vue";
 export default class Home extends Vue {}
 </script>
 <style scoped>
+.el-container {
+  height: 100%;
+}
 .el-aside {
   width: 290px;
   height: 100%;
 }
 .el-main {
-  padding: 0;
+}
+.shadow {
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 4px, rgba(0, 0, 0, 0.04) 0px 0px 6px;
 }
 </style>

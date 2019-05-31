@@ -74,4 +74,7 @@ ul > li {
 .session-list-container {
   padding-left: 0;
 }
+.el-container {
+  height: 100%;
+}
 </style>
