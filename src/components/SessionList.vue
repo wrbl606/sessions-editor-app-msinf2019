@@ -15,7 +15,11 @@
       </div>
 
       <ul class="session-list-container">
-        <li v-for="item in sessions" v-bind:key="item.id">
+        <li
+          v-for="item in sessions"
+          v-bind:key="item.id"
+          @click="selectSession(item)"
+        >
           <SessionItem :owner="item.sessionowner" :date="item.sessiondate" />
         </li>
       </ul>
@@ -36,11 +40,49 @@ import SItem from "@/components/SItem.vue";
       searchtext: "",
       searchinput: "",
       sessions: [
-        { id: 1, sessionowner: "Artur", sessiondate: "20-05-2019" },
-        { id: 2, sessionowner: "Bartek", sessiondate: "21-05-2019" },
-        { id: 3, sessionowner: "Maciek", sessiondate: "20-06-2019" }
+        {
+          id: 1,
+          sessionowner: "Artur",
+          sessiondate: "20-05-2019",
+          sessionLength: 1,
+          sessionItemsCount: 2,
+          minimumPeak: 3,
+          maximumPeak: 4,
+          peaksCount: 5,
+          averagePeaksCount: 6,
+          integralValue: 9
+        },
+        {
+          id: 2,
+          sessionowner: "Bartke",
+          sessiondate: "23-05-2019",
+          sessionLength: 7,
+          sessionItemsCount: 6,
+          minimumPeak: 5,
+          maximumPeak: 4,
+          peaksCount: 3,
+          averagePeaksCount: 2,
+          integralValue: 1
+        },
+        {
+          id: 3,
+          sessionowner: "Maciek",
+          sessiondate: "33-03-2019",
+          sessionLength: 33,
+          sessionItemsCount: 22,
+          minimumPeak: 33,
+          maximumPeak: 44,
+          peaksCount: 55,
+          averagePeaksCount: 66,
+          integralValue: 79
+        }
       ]
     };
+  },
+  methods: {
+    selectSession(item) {
+      this.$emit("selectSession", item);
+    }
   }
 })
 export default class SessionList extends Vue {

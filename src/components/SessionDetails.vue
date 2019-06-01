@@ -17,7 +17,7 @@
               placement="top"
               effect="light"
             >
-              <p>Test</p>
+              <p>{{ sessionLength }}</p>
             </el-tooltip>
           </div>
         </el-col>
@@ -31,7 +31,7 @@
                   placement="top"
                   effect="light"
                 >
-                  <p>Test</p>
+                  <p>{{ sessionItemsCount }}</p>
                 </el-tooltip>
               </div>
             </el-col>
@@ -43,7 +43,7 @@
                   placement="top"
                   effect="light"
                 >
-                  <p>Test</p>
+                  <p>{{ peaksCount }}</p>
                 </el-tooltip>
               </div>
             </el-col>
@@ -55,7 +55,7 @@
                   placement="top"
                   effect="light"
                 >
-                  <p>Test</p>
+                  <p>{{ averagePeaksCount }}</p>
                 </el-tooltip>
               </div>
             </el-col>
@@ -69,7 +69,7 @@
                   placement="top"
                   effect="light"
                 >
-                  <p>Test</p>
+                  <p>{{ maximumPeak }}</p>
                 </el-tooltip>
               </div>
             </el-col>
@@ -81,7 +81,7 @@
                   placement="top"
                   effect="light"
                 >
-                  <p>Test</p>
+                  <p>{{ minimumPeak }}</p>
                 </el-tooltip>
               </div>
             </el-col>
@@ -93,7 +93,7 @@
                   placement="top"
                   effect="light"
                 >
-                  <p>Test</p>
+                  <p>{{ integralValue }}</p>
                 </el-tooltip>
               </div>
             </el-col>
@@ -104,9 +104,23 @@
   </el-container>
 </template>
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-@Component
-export default class SessionDetails extends Vue {}
+import { Component, Vue, Prop } from "vue-property-decorator";
+@Component({
+  data() {
+    return {
+      sessionLength: this.$props.session.sessionLength,
+      sessionItemsCount: this.$props.session.sessionItemsCount,
+      minimumPeak: this.$props.session.minimumPeak,
+      maximumPeak: this.$props.session.maximumPeak,
+      peaksCount: this.$props.session.peaksCount,
+      averagePeaksCount: this.$props.session.averagePeaksCount,
+      integralValue: this.$props.session.integralValue
+    };
+  }
+})
+export default class SessionDetails extends Vue {
+  @Prop() private session!: any;
+}
 </script>
 <style scoped>
 .header-text {

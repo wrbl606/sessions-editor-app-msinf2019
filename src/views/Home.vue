@@ -1,11 +1,15 @@
 <template>
   <el-container class="home">
     <el-aside width="290px" class="session-list-container shadow">
-      <SessionList />
+      <SessionList @selectSession="selectSession" />
     </el-aside>
     <el-main class="main-container">
       <el-row>
-        <SessionDetails />
+        <SessionDetails
+          v-if="sessionLoad"
+          v-bind:session="sessionfromList"
+          :key="sessionfromList.id"
+        ></SessionDetails>
       </el-row>
     </el-main>
   </el-container>
@@ -20,6 +24,18 @@ import SessionDetails from "@/components/SessionDetails.vue";
   components: {
     SessionList,
     SessionDetails
+  },
+  data() {
+    return {
+      sessionfromList: "",
+      sessionLoad: false
+    };
+  },
+  methods: {
+    selectSession(item) {
+      this.$data.sessionfromList = item;
+      this.$data.sessionLoad = true;
+    }
   }
 })
 export default class Home extends Vue {}
