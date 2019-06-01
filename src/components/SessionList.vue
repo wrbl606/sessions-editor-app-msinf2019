@@ -9,18 +9,23 @@
     <el-divider></el-divider>
 
     <el-main>
-      <el-input placeholder="Please input" v-model="searchText"></el-input>
+      <el-input placeholder="Szukaj..." v-model="searchText"></el-input>
       <div v-if="sessions.length == 0">
         <p>No session found</p>
       </div>
 
-      <ul class="session-list-container">
+      <ul class="session-list-container dashed-end">
         <li
           v-for="item in sessions"
           v-bind:key="item.id"
+          class=""
           @click="selectSession(item)"
         >
-          <SessionItem :owner="item.sessionowner" :date="item.sessiondate" />
+          <SessionItem
+            class="dashed"
+            :owner="item.sessionowner"
+            :date="item.sessiondate"
+          />
         </li>
       </ul>
     </el-main>
@@ -118,5 +123,13 @@ ul > li {
 }
 .el-container {
   height: 100%;
+}
+.dashed {
+  border-top: 1px #aaaaaa dashed;
+  border-left: 1px #aaaaaa dashed;
+  border-right: 1px #aaaaaa dashed;
+}
+.dashed-end {
+  border-bottom: 1px #aaaaaa dashed;
 }
 </style>

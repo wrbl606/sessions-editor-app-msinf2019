@@ -10,92 +10,92 @@
     <el-main>
       <el-row :gutter="30">
         <el-col :span="6">
-          <div class="radius large-data-container shadow">
-            <el-tooltip
-              class="item"
-              content="Długość sesji"
-              placement="top"
-              effect="light"
-            >
-              <p>{{ sessionLength }}</p>
-            </el-tooltip>
-          </div>
+          <el-tooltip
+            class="item"
+            content="Długość sesji"
+            placement="top"
+            effect="light"
+          >
+            <div class="radius large-data-container shadow">
+              <p>{{ sessionLength }}s</p>
+            </div>
+          </el-tooltip>
         </el-col>
-        <el-col span="18">
-          <el-row gutter="30">
+        <el-col :span="18">
+          <el-row :gutter="30">
             <el-col :span="6">
-              <div class="radius data-container radius">
-                <el-tooltip
-                  class="item"
-                  content="Ilość wpisów"
-                  placement="top"
-                  effect="light"
-                >
+              <el-tooltip
+                class="item"
+                content="Ilość wpisów"
+                placement="top"
+                effect="light"
+              >
+                <div class="radius data-container shadow">
                   <p>{{ sessionItemsCount }}</p>
-                </el-tooltip>
-              </div>
+                </div>
+              </el-tooltip>
             </el-col>
             <el-col :span="6">
-              <div class="radius data-container radius">
-                <el-tooltip
-                  class="item"
-                  content="Ilość pików"
-                  placement="top"
-                  effect="light"
-                >
+              <el-tooltip
+                class="item"
+                content="Ilość pików"
+                placement="top"
+                effect="light"
+              >
+                <div class="radius data-container shadow">
                   <p>{{ peaksCount }}</p>
-                </el-tooltip>
-              </div>
+                </div>
+              </el-tooltip>
             </el-col>
             <el-col :span="6">
-              <div class="radius data-container radius">
-                <el-tooltip
-                  class="item"
-                  content="Średnia ilość  pików na minutę"
-                  placement="top"
-                  effect="light"
-                >
+              <el-tooltip
+                class="item"
+                content="Średnia ilość  pików na minutę"
+                placement="top"
+                effect="light"
+              >
+                <div class="radius data-container shadow">
                   <p>{{ averagePeaksCount }}</p>
-                </el-tooltip>
-              </div>
+                </div>
+              </el-tooltip>
             </el-col>
           </el-row>
           <el-row :gutter="30">
             <el-col :span="6">
-              <div class="radius data-container shadow">
-                <el-tooltip
-                  class="item"
-                  content="Najwyższy pik"
-                  placement="top"
-                  effect="light"
-                >
+              <el-tooltip
+                class="item"
+                content="Najwyższy pik"
+                placement="top"
+                effect="light"
+              >
+                <div class="radius data-container shadow">
                   <p>{{ maximumPeak }}</p>
-                </el-tooltip>
-              </div>
+                </div>
+              </el-tooltip>
             </el-col>
             <el-col :span="6">
-              <div class="radius data-container shadow">
-                <el-tooltip
-                  class="item"
-                  content="Najniższy pik"
-                  placement="top"
-                  effect="light"
-                >
+              <el-tooltip
+                class="item"
+                content="Najniższy pik"
+                placement="top"
+                effect="light"
+              >
+                <div class="radius data-container shadow">
                   <p>{{ minimumPeak }}</p>
-                </el-tooltip>
-              </div>
+                </div>
+              </el-tooltip>
             </el-col>
             <el-col :span="6">
-              <div class="radius data-container shadow">
-                <el-tooltip
-                  class="item"
-                  content="Wartość całki"
-                  placement="top"
-                  effect="light"
-                >
+              <el-tooltip
+                class="item"
+                content="Wartość całki"
+                placement="top"
+                effect="light"
+              >
+                <div class="radius data-container shadow">
                   <p>{{ integralValue }}</p>
-                </el-tooltip>
-              </div>
+                </div>
+              </el-tooltip>
             </el-col>
           </el-row>
         </el-col>
@@ -156,12 +156,14 @@ export default class SessionDetails extends Vue {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 1.3rem;
+  font-weight: bold;
 }
 .radius {
   border-radius: 4px;
-  border: 2px solid #c9c9c9;
+  border: 1px solid #eee;
 }
 .shadow {
-  box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 4px, rgba(0, 0, 0, 0.04) 0px 0px 6px;
+  box-shadow: 2px 12px 16px -21px rgba(0, 0, 0, 0.75);
 }
 </style>

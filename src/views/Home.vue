@@ -43,10 +43,12 @@ export default class Home extends Vue {}
 <style scoped>
 .el-container {
   height: 100%;
+  padding: 0;
+  margin: 0;
 }
 .el-aside {
   width: 290px;
-  height: 100%;
+  height: 98vh;
 }
 .el-main {
 }

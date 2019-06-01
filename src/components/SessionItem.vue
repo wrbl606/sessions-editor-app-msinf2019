@@ -1,5 +1,5 @@
 <template>
-  <el-container class="dashed">
+  <el-container class="interaction">
     <el-row>
       <p class="text date-text">{{ sessiondate }}</p>
       <p class="text owner-text">{{ sessionowner }}</p>
@@ -18,14 +18,11 @@ import { Component, Vue, Prop } from "vue-property-decorator";
   }
 })
 export default class SessionItem extends Vue {
-  @Prop({ default: "Artur" }) private owner!: string;
-  @Prop({ default: "29-06-2019" }) private date!: string;
+  @Prop({ default: "Unknown" }) private owner!: string;
+  @Prop({ default: "Unknown" }) private date!: string;
 }
 </script>
 <style scoped>
-.dashed {
-  border: 2px #aaaaaa dashed;
-}
 .el-row {
   width: 100%;
 }
@@ -39,6 +36,16 @@ export default class SessionItem extends Vue {
 }
 .owner-text {
   font-size: 0.7em;
-  color: #aaaaaa;
+  color: #666;
+}
+.interaction {
+  transition: 0.3s;
+  cursor: pointer;
+}
+.interaction:hover {
+  background: #e2f0ff;
+}
+.interaction:active {
+  background: #85bef7;
 }
 </style>
