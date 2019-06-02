@@ -3,7 +3,9 @@
     <el-header>
       <div class="text-wrapper">
         <p class="header-text">Szczegóły sesji</p>
-        <p class="add-text">Dodano przez Michał dnia 2019-02-2019</p>
+        <p class="add-text">
+          Dodano przez {{ sessionOwner }} dnia {{ sessionDate }}
+        </p>
       </div>
     </el-header>
 
@@ -108,6 +110,8 @@ import { Component, Vue, Prop } from "vue-property-decorator";
 @Component({
   data() {
     return {
+      sessionOwner: this.$props.session.sessionOwner,
+      sessionDate: this.$props.session.sessionDate,
       sessionLength: this.$props.session.sessionLength,
       sessionItemsCount: this.$props.session.sessionItemsCount,
       minimumPeak: this.$props.session.minimumPeak,

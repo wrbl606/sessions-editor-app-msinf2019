@@ -18,13 +18,13 @@
         <li
           v-for="item in sessions"
           v-bind:key="item.id"
-          class=""
+          class
           @click="selectSession(item)"
         >
           <SessionItem
             class="dashed"
-            :owner="item.sessionowner"
-            :date="item.sessiondate"
+            :owner="item.sessionOwner"
+            :date="item.sessionDate"
           />
         </li>
       </ul>
@@ -47,8 +47,8 @@ import SItem from "@/components/SItem.vue";
       sessions: [
         {
           id: 1,
-          sessionowner: "Artur",
-          sessiondate: "20-05-2019",
+          sessionOwner: "Artur",
+          sessionDate: "20-05-2019",
           sessionLength: 1,
           sessionItemsCount: 2,
           minimumPeak: 3,
@@ -59,8 +59,8 @@ import SItem from "@/components/SItem.vue";
         },
         {
           id: 2,
-          sessionowner: "Bartke",
-          sessiondate: "23-05-2019",
+          sessionOwner: "Bartke",
+          sessionDate: "23-05-2019",
           sessionLength: 7,
           sessionItemsCount: 6,
           minimumPeak: 5,
@@ -71,8 +71,8 @@ import SItem from "@/components/SItem.vue";
         },
         {
           id: 3,
-          sessionowner: "Maciek",
-          sessiondate: "33-03-2019",
+          sessionOwner: "Maciek",
+          sessionDate: "33-03-2019",
           sessionLength: 33,
           sessionItemsCount: 22,
           minimumPeak: 33,
