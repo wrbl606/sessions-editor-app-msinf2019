@@ -1,7 +1,10 @@
 <template>
   <el-container class="home">
     <el-aside width="290px" class="session-list-container shadow">
-      <SessionList @selectSession="selectSession" />
+      <SessionList
+        @selectSession="selectSession"
+        @addSession="loadSessionFile"
+      />
     </el-aside>
     <el-main class="main-container">
       <el-row>
@@ -19,6 +22,8 @@
 import { Component, Vue } from "vue-property-decorator";
 import SessionList from "@/components/SessionList.vue"; // @ is an alias to /src
 import SessionDetails from "@/components/SessionDetails.vue";
+const { dialog } = require("electron").remote;
+import SessionUnzipper from "@/model/sessions/SessionUnzipper";
 
 @Component({
   components: {
@@ -35,6 +40,30 @@ import SessionDetails from "@/components/SessionDetails.vue";
     selectSession(item) {
       this.$data.sessionfromList = item;
       this.$data.sessionLoad = true;
+    },
+    loadSessionFile() {
+      const filePath = dialog.showOpenDialog({
+        title: "Pick a session file to load",
+        filters: [
+          {
+            name: "Session file (archive)",
+            extensions: ["zip"]
+          }
+        ],
+        properties: ["openFile"]
+      });
+      if (!filePath) return;
+
+      try {
+        const unzipper = new SessionUnzipper(filePath[0]);
+        // TODO: create session in db and upload all entries from unzipped file
+      } catch (e) {
+        dialog.showErrorBox(
+          "Invalid file",
+          "Given file is not a valid session archive"
+        );
+        return;
+      }
     }
   }
 })

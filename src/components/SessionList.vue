@@ -1,7 +1,11 @@
 <template>
   <el-container>
     <el-header>
-      <el-button type="primary" icon="el-icon-plus" size="medium"
+      <el-button
+        @click="$emit('addSession')"
+        type="primary"
+        icon="el-icon-plus"
+        size="medium"
         >Dodaj nową sesję</el-button
       >
     </el-header>

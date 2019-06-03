@@ -13,8 +13,13 @@
   },
   "main": "background.js",
   "dependencies": {
+    "@types/adm-zip": "^0.4.32",
+    "@types/mkdirp": "^0.5.2",
+    "adm-zip": "^0.4.13",
     "core-js": "^2.6.5",
     "element-ui": "^2.4.5",
+    "mkdirp": "^0.5.1",
+    "objects-to-csv": "^1.2.1",
     "vue": "^2.6.10",
     "vue-class-component": "^7.0.2",
     "vue-property-decorator": "^8.1.0",
