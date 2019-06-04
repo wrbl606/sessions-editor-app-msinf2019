@@ -9,9 +9,11 @@
     <el-main class="main-container">
       <el-row>
         <SessionDetails
-          v-if="sessionLoad"
+          v-if="sessionSelected"
           v-bind:session="sessionfromList"
           :key="sessionfromList.id"
+          :accelerometerEntries="selectedSessionAccData"
+          :gyroEntries="selectedSessionGyroData"
         ></SessionDetails>
       </el-row>
     </el-main>
@@ -33,13 +35,15 @@ import SessionUnzipper from "@/model/sessions/SessionUnzipper";
   data() {
     return {
       sessionfromList: "",
-      sessionLoad: false
+      sessionSelected: false,
+      selectedSessionAccData: [],
+      selectedSessionGyroData: []
     };
   },
   methods: {
     selectSession(item) {
       this.$data.sessionfromList = item;
-      this.$data.sessionLoad = true;
+      this.$data.sessionSelected = true;
     },
     loadSessionFile() {
       const filePath = dialog.showOpenDialog({
@@ -56,7 +60,25 @@ import SessionUnzipper from "@/model/sessions/SessionUnzipper";
 
       try {
         const unzipper = new SessionUnzipper(filePath[0]);
-        // TODO: create session in db and upload all entries from unzipped file
+        const accNorms = new Array<Number>();
+        const gyroNorms = new Array<Number>();
+        let counter = 0;
+        unzipper.readAccelerometerDataToArray().forEach(entry => {
+          if (counter > accNorms.length / 30) {
+            accNorms.push(entry.norm);
+            counter = 0;
+          }
+          counter++;
+        });
+        unzipper.readGyroDataToArray().forEach(entry => {
+          if (counter > gyroNorms.length / 30) {
+            gyroNorms.push(entry.norm);
+            counter = 0;
+          }
+          counter++;
+        });
+        this.$data.selectedSessionAccData = accNorms;
+        this.$data.selectedSessionGyroData = gyroNorms;
       } catch (e) {
         dialog.showErrorBox(
           "Invalid file",
@@ -71,7 +93,7 @@ export default class Home extends Vue {}
 </script>
 <style scoped>
 .el-container {
-  height: 100%;
+  height: 97vh;
   padding: 0;
   margin: 0;
 }
@@ -80,6 +102,7 @@ export default class Home extends Vue {}
   height: 98vh;
 }
 .el-main {
+  padding: 0;
 }
 .shadow {
   box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 4px, rgba(0, 0, 0, 0.04) 0px 0px 6px;

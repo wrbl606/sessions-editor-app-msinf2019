@@ -102,12 +102,28 @@
           </el-row>
         </el-col>
       </el-row>
+      <el-row>
+        <chart
+          class="chart"
+          :series="$props.accelerometerEntries"
+          title="Wpisy z akcelerometru"
+        />
+        <chart
+          class="chart"
+          :series="$props.gyroEntries"
+          title="Wpisy z żyroskopu"
+        />
+      </el-row>
     </el-main>
   </el-container>
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
+import Chart from "./LineChart.vue";
+import SessionDataRow from "../model/sessions/SessionDataRow";
+
 @Component({
+  components: { Chart },
   data() {
     return {
       sessionOwner: this.$props.session.sessionOwner,
@@ -124,6 +140,8 @@ import { Component, Vue, Prop } from "vue-property-decorator";
 })
 export default class SessionDetails extends Vue {
   @Prop() private session!: any;
+  @Prop() private accelerometerEntries!: Array<SessionDataRow>;
+  @Prop() private gyroEntries!: Array<SessionDataRow>;
 }
 </script>
 <style scoped>
@@ -140,8 +158,6 @@ export default class SessionDetails extends Vue {
 }
 .text-wrapper {
   text-align: left;
-}
-.el-main {
 }
 .el-col {
   margin-bottom: 10px;
@@ -169,5 +185,8 @@ export default class SessionDetails extends Vue {
 }
 .shadow {
   box-shadow: 2px 12px 16px -21px rgba(0, 0, 0, 0.75);
+}
+.chart {
+  margin-top: 42px;
 }
 </style>
