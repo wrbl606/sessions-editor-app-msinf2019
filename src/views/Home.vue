@@ -1,5 +1,20 @@
 <template>
   <el-container class="home">
+    <el-dialog
+      title="Uploading data"
+      :visible.sync="isUploading"
+      :close-on-click-modal="false"
+      :show-close="false"
+    >
+      <loader
+        :loading="true"
+        color="#409EFF"
+        class="loader"
+        radius="12px"
+      ></loader>
+      <span>Your data is being uploaded to the database. Please wait...</span>
+    </el-dialog>
+
     <el-aside width="290px" class="session-list-container shadow">
       <SessionList
         @selectSession="selectSession"
@@ -26,18 +41,22 @@ import SessionList from "@/components/SessionList.vue"; // @ is an alias to /src
 import SessionDetails from "@/components/SessionDetails.vue";
 const { dialog } = require("electron").remote;
 import SessionUnzipper from "@/model/sessions/SessionUnzipper";
+import { insertSession } from "@/model/database/connection";
+import Loader from "vue-spinner/src/FadeLoader.vue";
 
 @Component({
   components: {
     SessionList,
-    SessionDetails
+    SessionDetails,
+    Loader
   },
   data() {
     return {
       sessionfromList: "",
       sessionSelected: false,
       selectedSessionAccData: [],
-      selectedSessionGyroData: []
+      selectedSessionGyroData: [],
+      isUploading: false
     };
   },
   methods: {
@@ -45,7 +64,7 @@ import SessionUnzipper from "@/model/sessions/SessionUnzipper";
       this.$data.sessionfromList = item;
       this.$data.sessionSelected = true;
     },
-    loadSessionFile() {
+    async loadSessionFile() {
       const filePath = dialog.showOpenDialog({
         title: "Pick a session file to load",
         filters: [
@@ -79,6 +98,15 @@ import SessionUnzipper from "@/model/sessions/SessionUnzipper";
         });
         this.$data.selectedSessionAccData = accNorms;
         this.$data.selectedSessionGyroData = gyroNorms;
+
+        this.$data.isUploading = true;
+        await insertSession(
+          new Date(),
+          "Marcin",
+          unzipper.readAccelerometerDataToArray(),
+          unzipper.readGyroDataToArray()
+        );
+        this.$data.isUploading = false;
       } catch (e) {
         dialog.showErrorBox(
           "Invalid file",
@@ -106,5 +134,9 @@ export default class Home extends Vue {}
 }
 .shadow {
   box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 4px, rgba(0, 0, 0, 0.04) 0px 0px 6px;
+}
+.loader {
+  display: block;
+  margin: 0 auto;
 }
 </style>
