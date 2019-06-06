@@ -1,25 +1,7 @@
 <template>
   <el-container class="home">
-    <el-dialog
-      title="Uploading data"
-      :visible.sync="isUploading"
-      :close-on-click-modal="false"
-      :show-close="false"
-    >
-      <loader
-        :loading="true"
-        color="#409EFF"
-        class="loader"
-        radius="12px"
-      ></loader>
-      <span>Your data is being uploaded to the database. Please wait...</span>
-    </el-dialog>
-
     <el-aside width="290px" class="session-list-container shadow">
-      <SessionList
-        @selectSession="selectSession"
-        @addSession="loadSessionFile"
-      />
+      <SessionList @selectSession="selectSession" />
     </el-aside>
     <el-main class="main-container">
       <el-row>
@@ -39,16 +21,11 @@
 import { Component, Vue } from "vue-property-decorator";
 import SessionList from "@/components/SessionList.vue"; // @ is an alias to /src
 import SessionDetails from "@/components/SessionDetails.vue";
-const { dialog } = require("electron").remote;
-import SessionUnzipper from "@/model/sessions/SessionUnzipper";
-import { insertSession } from "@/model/database/connection";
-import Loader from "vue-spinner/src/FadeLoader.vue";
 
 @Component({
   components: {
     SessionList,
-    SessionDetails,
-    Loader
+    SessionDetails
   },
   data() {
     return {
@@ -56,64 +33,14 @@ import Loader from "vue-spinner/src/FadeLoader.vue";
       sessionSelected: false,
       selectedSessionAccData: [],
       selectedSessionGyroData: [],
-      isUploading: false
+      isUploading: false,
+      isWaitingForUsername: false
     };
   },
   methods: {
     selectSession(item) {
       this.$data.sessionfromList = item;
       this.$data.sessionSelected = true;
-    },
-    async loadSessionFile() {
-      const filePath = dialog.showOpenDialog({
-        title: "Pick a session file to load",
-        filters: [
-          {
-            name: "Session file (archive)",
-            extensions: ["zip"]
-          }
-        ],
-        properties: ["openFile"]
-      });
-      if (!filePath) return;
-
-      try {
-        const unzipper = new SessionUnzipper(filePath[0]);
-        const accNorms = new Array<Number>();
-        const gyroNorms = new Array<Number>();
-        let counter = 0;
-        unzipper.readAccelerometerDataToArray().forEach(entry => {
-          if (counter > accNorms.length / 30) {
-            accNorms.push(entry.norm);
-            counter = 0;
-          }
-          counter++;
-        });
-        unzipper.readGyroDataToArray().forEach(entry => {
-          if (counter > gyroNorms.length / 30) {
-            gyroNorms.push(entry.norm);
-            counter = 0;
-          }
-          counter++;
-        });
-        this.$data.selectedSessionAccData = accNorms;
-        this.$data.selectedSessionGyroData = gyroNorms;
-
-        this.$data.isUploading = true;
-        await insertSession(
-          new Date(),
-          "Marcin",
-          unzipper.readAccelerometerDataToArray(),
-          unzipper.readGyroDataToArray()
-        );
-        this.$data.isUploading = false;
-      } catch (e) {
-        dialog.showErrorBox(
-          "Invalid file",
-          "Given file is not a valid session archive"
-        );
-        return;
-      }
     }
   }
 })
