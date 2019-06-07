@@ -77,7 +77,7 @@ export function getSessions(): Promise<[]> {
   });
 }
 
-export function getSessionEntries(sessionId: number) {
+export function getSessionEntries(sessionId: number): Promise<any[]> {
   return new Promise((resolve, _) => {
     connection.query(
       `select * from wpisy where id_sesji=${sessionId}`,

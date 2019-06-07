@@ -38,7 +38,7 @@ import VueApexCharts from "vue-apexcharts";
           labels: {
             show: true,
             formatter: (value: any, timestamp: number, index: number) => {
-              return index % 20 === 0 ? `${value}` : "`";
+              return index % 100 === 0 ? `${value}` : "`";
             }
           },
           axisTicks: {

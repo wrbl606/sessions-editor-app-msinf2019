@@ -112,25 +112,6 @@ export default class SessionList extends Vue {
 
     try {
       const unzipper = new SessionUnzipper(filePath[0]);
-      const accNorms = new Array<Number>();
-      const gyroNorms = new Array<Number>();
-      let counter = 0;
-      unzipper.readAccelerometerDataToArray().forEach(entry => {
-        if (counter > accNorms.length / 30) {
-          accNorms.push(entry.norm);
-          counter = 0;
-        }
-        counter++;
-      });
-      unzipper.readGyroDataToArray().forEach(entry => {
-        if (counter > gyroNorms.length / 30) {
-          gyroNorms.push(entry.norm);
-          counter = 0;
-        }
-        counter++;
-      });
-      this.$data.selectedSessionAccData = accNorms;
-      this.$data.selectedSessionGyroData = gyroNorms;
 
       const result: any = await this.$prompt(
         "Who is the author of given session?",
